@@ -1,4 +1,4 @@
-
+''' Minimal implementation of an LRU cache which implements addition, deletion and retrieval in O(1)'''
 class Node(object):
     def __init__(self, key, value):
         ''' A node in a doubly linked list '''
@@ -64,7 +64,3 @@ class LRU(object):
         if next_node: next_node.prev = prev_node
         del self.cache[key]
         
-
-    
-    
-   
