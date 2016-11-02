@@ -16,7 +16,7 @@ class LRU(object):
         self.end_node = None
         
     def add(self, key, value):
-        if key in self.cache: # If code is in the 
+        if key in self.cache: # If key is in the cache, we refresh it. 
             self.remove(key)
 
         node = Node(key, value)
@@ -66,6 +66,7 @@ class LRU(object):
         del self.cache[key]
         
     def print_state(self):
+        ''' Print the current state of the cache '''
         print ('cache state', len(self.cache))
         iter_node = self.start_node
         while(iter_node):
@@ -76,8 +77,8 @@ if __name__ == "__main__":
     lru_cache = LRU(3)
     inpt = [(1,2), (2,3), (3,4), (2,5)]
 
-    for k, v in inpt:
-        lru_cache.add(k,v)
+    for key, value in inpt:
+        lru_cache.add(key,value)
 
     lru_cache.remove(2)
     
