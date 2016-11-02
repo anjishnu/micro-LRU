@@ -1,6 +1,7 @@
 
 class Node(object):
     def __init__(self, key, value):
+        ''' A node in a doubly linked list '''
         self.key = key
         self.value = value
         self.next = None
@@ -8,7 +9,7 @@ class Node(object):
 
         
 class LRU(object):
-
+    
     def __init__(self, capacity=1000):
         self.capacity = capacity
         self.cache = {}
@@ -16,12 +17,13 @@ class LRU(object):
         self.end_node = None
         
     def add(self, key, value):
-        if key in self.cache: # If code is in the 
+        ''' Add a value to the cache '''
+        if key in self.cache: # If key is in the cache, refresh 
             self.remove(key)
 
         node = Node(key, value)
 
-        if len(self.cache) == 0: # Cache is empty
+        if not len(self.cache): # Cache is empty
             self.start_node = node
             self.end_node = node
             self.cache[key] = node
@@ -39,15 +41,16 @@ class LRU(object):
 
         return    
     
-    def retrieve(self, key):
+    def retrieve(self, key): 
+        ''' Get a value given a key '''
         if key in self.cache:
             value = self.cache[key].value
             self.remove(key)
             self.add(key, value)
             return value
 
-    def remove(self, key):
-
+    def remove(self, key): 
+        ''' Delete a key from the LRU cache '''
         next_node = self.cache[key].next
         prev_node = self.cache[key].prev
 
@@ -57,29 +60,11 @@ class LRU(object):
         if self.cache[key] == self.end_node:
             self.end_node = prev_node
 
-        if prev_node: 
-            prev_node.next = next_node
-
-        if next_node: 
-            next_node.prev = prev_node
-
+        if prev_node: prev_node.next = next_node
+        if next_node: next_node.prev = prev_node
         del self.cache[key]
         
-    def print_state(self):
-        print ('cache state', len(self.cache))
-        iter_node = self.start_node
-        while(iter_node):
-            print (iter_node.key, iter_node.value)
-            iter_node = iter_node.next
 
-if __name__ == "__main__":
-    lru_cache = LRU(3)
-    inpt = [(1,2), (2,3), (3,4), (2,5)]
-
-    for k, v in inpt:
-        lru_cache.add(k,v)
-
-    lru_cache.remove(2)
     
     
    
